@@ -22,24 +22,6 @@ const PropertySchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        state: {
-            type: String,
-            required: true,
-        },
-        zipCode: {
-            type: String,
-            required: true,
-        },
-        coordinates: {
-            lat: {
-                type: Number,
-                required: false,
-            },
-            lng: {
-                type: Number,
-                required: false,
-            }
-        }
     },
     images: [{
         type: String, 
