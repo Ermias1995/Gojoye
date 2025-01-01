@@ -16,6 +16,8 @@ const PORT = 3000;
 app.use(express.json());
 
 const authRoute = require("./routes/auth");
+const propertyRoutes = require("./routes/property");
+const inquiryRoutes = require("./routes/inquiry");
 
 
 // Database connector code
@@ -30,6 +32,12 @@ mongoose
 
 // Auth route path
 app.use("/auth", authRoute);
+
+// Property route path
+app.use("/properties", propertyRoutes);
+
+// Inquiry route path
+app.use("/inquiries", inquiryRoutes);
 
 //ROUTE NOT FOUND
 app.use((req, res, next) => {
