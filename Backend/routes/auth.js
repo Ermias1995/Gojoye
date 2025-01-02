@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const md5 = require("md5");
+const bcrypt = require("bcrypt")
+
 
 // const jwtPrivateKey = fs.readFileSync('./rsa.pem', 'utf8');
 const jwtPrivateKey = process.env.JWTKEY;
@@ -29,9 +30,12 @@ router.post("/register", async(req, res, next) => {
             return res.status(200).json({ message: "Email already taken!" });
         }
 
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
         const newUser = new User({
             username: req.body.username,
-            password: md5(req.body.password),
+            password: hashedPassword,
             email: req.body.email,
             userType: req.body.userType,
             securityQuestion: req.body.securityQuestion,
@@ -63,11 +67,12 @@ router.post("/login", async(req, res, next) => {
                 return res.status(401).json({ message: "Wrong Credientials!" });
             }
 
-            const hashedPassword = md5(req.body.password);
-            const userPassword = user.password;
+
+            const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+
 
             // userPassword !== req.body.password && res.status(401).json("Wrong Credientials!");
-            if (userPassword !== hashedPassword) {
+            if (!passwordMatch) {
                 return res.status(401).json({ message: "Wrong Credientials!" });
             }
 
@@ -156,8 +161,9 @@ router.put("/changepassword", async(req, res, next) => {
                 return res.status(401).json({ message: "Wrong Credientials!" });
             } else {
                 try {
+                    const saltRounds = 10;
                     const user = await User.findOneAndUpdate({ email: req.body.email }, {
-                        password: md5(req.body.password),
+                        password: await bcrypt.hash(req.body.password, saltRounds),
                     });
 
                     res.status(201).json({ message: "Password Change Successful!" });
