@@ -5,6 +5,7 @@
 Please ensure to update the `README.md` file with details of any new API endpoints you implement. This will help the frontend team to work simultaneously and stay in sync with the backend developments.
 
 ### What to Include:
+
 - Endpoint URL
 - HTTP Method (GET, POST, PUT, DELETE, etc.)
 - Request Parameters
@@ -13,35 +14,40 @@ Please ensure to update the `README.md` file with details of any new API endpoin
 
 Thank you for your cooperation!
 
-
-
 # Preparation
+
 - Make sure to add environments variables with the following format:
-    ```
-        MONGODB_URL = 'mongodb://127.0.0.1:27017/gojoye' or
-        MONGODB_URL = '{your url to the mongodb database}'
-        JWTKEY = '{your preferred random strong key}'
-    ```
+  ```
+      MONGODB_URL = 'mongodb://127.0.0.1:27017/gojoye' or
+      MONGODB_URL = '{your url to the mongodb database}'
+      JWTKEY = '{your preferred random strong key}'
+  ```
+
 # Endpoints
+
 - ## For sign up
+
+  ```
+      POST /auth/register
+  ```
+
+  ### request parameters:
+
+  - Body:
     ```
-        POST /auth/register
+        {
+            "username": "",
+            "password": "",
+            "email": "",
+            "userType": "",
+            "securityQuestion": "",
+            "securityAnswer": ""
+        }
+
     ```
 
-    ### request parameters: 
-     - Body:
-        ```
-            {
-                "username": "",
-                "password": "",
-                "email": "",
-                "userType": "",
-                "securityQuestion": "",
-                "securityAnswer": ""
-            } 
-        
-        ```
-    ### response format: 
+  ### response format:
+
         ```
             {
                 "message": "Account Created Successfully!",
@@ -57,106 +63,116 @@ Thank you for your cooperation!
                     "__v": 0
                 }
             }
-        ``` 
+        ```
 
 - ## For sign in
+
+  ```
+      POST /auth/login
+  ```
+
+  ### request parameters:
+
+  - Body:
     ```
-        POST /auth/login
+        {
+            "email": "",
+            "password": ""
+        }
+
     ```
 
-    ### request parameters: 
-     - Body:
-        ```
-            {
-                "email": "",
-                "password": ""
-            } 
-        
-        ```
-    ### response format: 
+  ### response format:
+
         ```
             {
                 "message": "Log In Successful!",
                 "accessToken": ""
             }
-        ``` 
-
-
+        ```
 
 - ## For update profile
+
+  ```
+      PUT /auth/updateprofile
+  ```
+
+  ### request parameters:
+
+  - Headers:
+
     ```
-        PUT /auth/updateprofile
+
+        "token": "bearer {received token}"
+
+
     ```
 
-    ### request parameters: 
+  - Body:
+    ```
+        {
+            "_id": "{recieved id}",
+            "username": "",
+            "email": "",
+            "userType": "",
+            "securityQuestion": "",
+            "securityAnswer": ""
+        }
 
-    - Headers:
-        ```
-            
-            "token": "bearer {received token}"
-            
-        
-        ```
+    ```
 
-     - Body:
-        ```
-            {
-                "_id": "{recieved id}",
-                "username": "",
-                "email": "",
-                "userType": "",
-                "securityQuestion": "",
-                "securityAnswer": ""
-            } 
-        
-        ```
-    ### response format: 
+  ### response format:
+
         ```
             {
                 "message": "Update Successful!"
             }
-        ``` 
+        ```
 
 - ## For change password
+
+  ```
+      PUT auth/forgot-password
+  ```
+
+  ### request parameters:
+
+  - Body:
     ```
-        PUT /auth/changepassword
+        {
+            "email": ""
+        }
+
     ```
 
-    ### request parameters: 
-     - Body:
+  ### response format:
+
         ```
-            {
-                "email": "",
-                "password": "{new password}",
-                "securityQuestion": "",
-                "securityAnswer": ""
-            } 
-        
+            This endpoint does not have any responses. It will send OTP to the provided email which will then be used to verify for later routes.
         ```
-    ### response format: 
-        ```
-            {
-                "message": "Password Change Successful!"
-            }
-        ``` 
 
 - ## For getting the security question
+
+  ```
+      PUT auth/reset-password
+  ```
+
+  ### request parameters:
+
+  - Body:
     ```
-        PUT /auth/getSecurityQuestion
+        {
+            "email": "",
+            "otp": "",
+            "newPassword": ""
+        }
+
     ```
 
-    ### request parameters: 
-     - Body:
+  ### response format:
+
         ```
             {
-                "email": ""
-            } 
-        
-        ```
-    ### response format: 
-        ```
-            {
-                "message": "Email Verified!",
-                "securityQuestion": ""
+                "message": "Password reset successfully"
             }
-        ``` 
+        ```
