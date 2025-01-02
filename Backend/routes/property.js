@@ -56,8 +56,7 @@ router.get("/:id", async (req, res, next) => {
 // Get all properties (with search functionality)
 router.get("/", async (req, res, next) => {
     try {
-        const filters = req.query; 
-        const properties = await Property.find(filters).populate("landlord", "username email");
+        const properties = await Property.find().populate("landlord", "username email");
         res.status(200).json(properties);
     } catch (error) {
         next(error);
@@ -67,10 +66,59 @@ router.get("/", async (req, res, next) => {
 // Get properties by landlord
 router.get("/landlord/:landlordId", verifyToken, async (req, res, next) => {
     try {
-        const properties = await Property.find({ landlord: req.params.landlordId });
+        const properties = await Property.find({ landlord: req.params.landlordId }).populate("landlord", "username email");
         res.status(200).json(properties);
     } catch (error) {
         next(error);
+    }
+});
+
+// Search properties
+router.get("/search", async (req, res, next) => {
+    try {
+        const { 
+            minPrice, 
+            maxPrice, 
+            location, 
+            bedrooms, 
+            bathrooms, 
+            propertyType 
+        } = req.query;
+
+   
+        const query = {};
+
+        if (minPrice || maxPrice) {
+            query.price = {};
+            if (minPrice) query.price.$gte = Number(minPrice); 
+            if (maxPrice) query.price.$lte = Number(maxPrice); 
+        }
+
+        if (location) {
+            query.location = { $regex: location, $options: "i" }; 
+        }
+
+        if (bedrooms) {
+            query.bedrooms = Number(bedrooms); 
+        }
+
+        if (bathrooms) {
+            query.bathrooms = Number(bathrooms); 
+        }
+
+        if (propertyType) {
+            query.propertyType = { $regex: propertyType, $options: "i" }; 
+        }
+
+        const properties = await Property.find(query).populate("landlord", "username email").sort({ price: 1 }); 
+
+        if (!properties || properties.length === 0) {
+            return res.status(404).json({ message: "No properties found matching your criteria!" });
+        }
+
+        res.status(200).json(properties);
+    } catch (err) {
+        next(err);
     }
 });
 
