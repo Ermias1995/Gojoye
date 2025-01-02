@@ -18,14 +18,11 @@ const UserSchema = new mongoose.Schema({
         enum: ["renter", "landlord", "admin"],
         default: "renter",
     },
-    securityQuestion: {
+    generatedOTP: {
         type: String,
         required: false,
     },
-    securityAnswer: {
-        type: String,
-        required: false,
-    }
+
 }, {
     timestamps: true,
 })
