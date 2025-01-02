@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
+const nodemailer = require("nodemailer");
 
 // const jwtPrivateKey = fs.readFileSync('./rsa.pem', 'utf8');
 const jwtPrivateKey = process.env.JWTKEY;
@@ -67,9 +68,10 @@ router.post("/login", async(req, res, next) => {
                 return res.status(401).json({ message: "Wrong Credientials!" });
             }
 
-
-            const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-
+            const passwordMatch = await bcrypt.compare(
+                req.body.password,
+                user.password
+            );
 
             // userPassword !== req.body.password && res.status(401).json("Wrong Credientials!");
             if (!passwordMatch) {
@@ -99,7 +101,6 @@ router.post("/login", async(req, res, next) => {
         }
     }
 });
-
 
 // Update
 router.put("/updateprofile", verifyToken, async(req, res, next) => {
@@ -132,68 +133,124 @@ router.put("/updateprofile", verifyToken, async(req, res, next) => {
     }
 });
 
-// Forgot Password
-router.put("/changepassword", async(req, res, next) => {
+// Reset Password
+router.post("/forgot-password", async(req, res, next) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(404).json({ message: "Email is required!" });
 
+        const createdPasswordResetOTP = await sendPasswordResetOTP(email, res);
 
-    if (!req.body.securityAnswer ||
-        !req.body.password ||
-        !req.body.email ||
-        !req.body.securityQuestio
-    ) {
-        res.status(400).json("Please fill the required inputs!");
-    } else {
-        try {
-            const securityQuestion = req.body.securityQuestion;
-            const securityAnswer = req.body.securityAnswer;
-
-            const user = await User.findOne({
-                email: req.body.email,
-            });
-
-            // !user && res.status(401).json("Wrong Credientials!");
-            if (!user) {
-                return res.status(401).json({ message: "Wrong Credientials!" });
-            }
-
-            // !user && res.status(401).json("Wrong Credientials!");
-            if (user.securityAnswer != req.body.securityAnswer) {
-                return res.status(401).json({ message: "Wrong Credientials!" });
-            } else {
-                try {
-                    const saltRounds = 10;
-                    const user = await User.findOneAndUpdate({ email: req.body.email }, {
-                        password: await bcrypt.hash(req.body.password, saltRounds),
-                    });
-
-                    res.status(201).json({ message: "Password Change Successful!" });
-                } catch (error) {
-                    next(error);
-                }
-            }
-        } catch (err) {
-            return next(err);
-        }
+        res.status(200).json(createdPasswordResetOTP);
+    } catch (error) {
+        next(error);
     }
 });
 
-router.post("/getSecurityQuestion", async(req, res, next) => {
-    if (!req.body.email) {
-        res.status(400).json("Please fill the required inputs!");
-    } else {
-        try {
-            const user = await User.findOne({ email: req.body.email });
+const sendPasswordResetOTP = async(email, res) => {
+    try {
+        const existingUser = await User.findOne({ email: email });
 
-            if (!user) {
-                return res.status(401).json({ message: "Wrong Credientials!" });
-            }
+        if (!existingUser)
+            return res.status(404).json({ message: "User not found" });
 
-            const securityQuestion = user.securityQuestion
+        const generatedOTP = generateOTP();
+        const otpDetails = {
+            email,
+            subject: "Password Reset",
+            message: `Enter the following code to reset your password. Your OTP is: ${generatedOTP}`,
+            duration: 1,
+            generatedOTP: generatedOTP,
+        };
 
-            res.status(200).json({ message: "Email Verified!", "securityQuestion": securityQuestion });
-        } catch (err) {
-            return next(err);
+        const createdOTP = await sendOTP(otpDetails);
+        return createdOTP;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const sendOTP = async(otpDetails) => {
+    const mailOptions = {
+        from: process.env.OTP_EMAIL,
+        to: otpDetails.email,
+        subject: otpDetails.subject,
+        text: otpDetails.message,
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        await User.findOneAndUpdate({ email: otpDetails.email }, { generatedOTP: otpDetails.generatedOTP });
+    } catch (error) {
+        console.error("Error sending OTP:", error);
+        throw error;
+    }
+};
+
+// Generate random code
+function generateOTP() {
+    const digits = "0123456789";
+    let otp = "";
+    for (let i = 0; i < 6; i++) {
+        otp += digits[Math.floor(Math.random() * 10)];
+    }
+    return otp;
+}
+
+// Send OTP via email
+const transporter = nodemailer.createTransport({
+    // Configure your email provider here
+    service: "gmail",
+    auth: {
+        user: process.env.OTP_EMAIL,
+        pass: process.env.OTP_EMAIL_PASSWORD,
+    },
+    tls: {
+        rejectUnauthorized: false,
+    },
+});
+
+// Verify OTP Route
+const verifyOTP = async(req, res, next) => {
+    const { email, otp } = req.body;
+
+    try {
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(404).json({ message: "User not found" });
         }
+
+        if (existingUser.generatedOTP !== otp) {
+            return res.status(400).json({ message: "Invalid or expired OTP" });
+        }
+
+        // res.json({ message: 'OTP verified' });
+        next();
+    } catch (error) {
+        res.status(500).json({ message: "Error verifying OTP" });
+    }
+};
+
+router.post("/reset-password", verifyOTP, async(req, res) => {
+    const { email, newPassword } = req.body;
+
+    try {
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update user's password
+        existingUser.password = hashedPassword;
+        existingUser.generatedOTP = undefined;
+        await existingUser.save();
+
+        res.json({ message: "Password reset successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error resetting password" });
     }
 });
 
