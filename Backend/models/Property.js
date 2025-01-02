@@ -36,6 +36,11 @@ const PropertySchema = new mongoose.Schema({
         enum: ["house", "apartment", "condominium"],
         required: true,
     },
+    transactionType: { 
+        type: String, 
+        enum: ["sale", "rent"], 
+        required: true 
+    },
     bedrooms: {
         type: Number,
         required: true,
