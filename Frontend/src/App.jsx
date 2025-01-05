@@ -11,9 +11,9 @@ function App() {
   return (
    <BrowserRouter>
     <Routes>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>}/>
       <Route path='/' element={<SharedLayout/>}>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<Signup/>}/>
         <Route index element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
       </Route>
