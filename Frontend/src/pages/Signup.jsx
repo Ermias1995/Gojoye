@@ -8,10 +8,11 @@ function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState('');
   
   return (
     <div>
-      <div className="flex justify-between items-center pr-6 md:pr-32 my-10 h-[781px]">
+      <div className="flex justify-center gap-4 items-center my-4">
       <div className="bg-[#CBE4E8]">
         <img src={signup} alt="Signup Page" className='hidden md:block w-[750px]'/>
       </div>
@@ -24,6 +25,11 @@ function Signup() {
           <input type="text" placeholder="Name" onChange={(e)=>setName(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
           <input type="email" placeholder="Enter Email or Phone Number" onChange={(e)=>setEmail(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
           <input type="text" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
+          <select onChange={(e) => setUserType(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none">
+            <option value="">Select User Type</option>
+            <option value="renter-buyer">Renter/Buyer</option>
+            <option value="landlord">Landlord</option>
+          </select>
           <div className="flex flex-col justify-center md:justify-start gap-6">
             <button className="text-white py-3 bg-[#EA4335] text-base w-full rounded-[4px]" >Create Account</button>
             <button className="flex gap-1 items-center justify-center py-3 text-base w-full border border-[#808080] rounded-[4px]"><img src={google} alt="Google" className="w-6 h-6"/>Sign up with Google</button>
