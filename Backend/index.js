@@ -19,7 +19,8 @@ const authRoute = require("./routes/auth");
 const propertyRoutes = require("./routes/property");
 const inquiryRoutes = require("./routes/inquiry");
 
-
+const reviewRoute = require("./routes/review");
+app.use("/review", reviewRoute);
 // Database connector code
 mongoose
     .connect(process.env.MONGODB_URL)
@@ -54,3 +55,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Server is up and running on PORT: ${PORT}`);
 });
+
+
+
