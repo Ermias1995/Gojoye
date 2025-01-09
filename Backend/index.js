@@ -17,7 +17,8 @@ app.use(express.json());
 
 const authRoute = require("./routes/auth");
 
-
+const reviewRoute = require("./routes/review");
+app.use("/review", reviewRoute);
 // Database connector code
 mongoose
     .connect(process.env.MONGODB_URL)
@@ -49,5 +50,3 @@ app.listen(PORT, () => {
 
 
 
-const reviewRoute = require("./routes/review");
-app.use("/review", reviewRoute);
