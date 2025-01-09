@@ -2,7 +2,15 @@ import { FaSearch, FaCalendar, FaWifi, FaCommentDots } from "react-icons/fa";
 import { GiSofa } from "react-icons/gi";
 import home from '../assets/home.jpeg';
 import home2 from '../assets/home2.jpeg';
+import piazza from '../assets/piazza.jpg';
+import bole from '../assets/bole.jpg';
+import aratkilo from '../assets/4kilo.jpg';
+import mexico from '../assets/mexico.jpg';
+import cmc from '../assets/cmc.jpg';
+import ayat from '../assets/ayat.jpg';
+import home3 from '../assets/home3.png';
 import { useState } from "react";
+
 function Home() {
   const [subCity, setSubCity] = useState('');
   return (
@@ -80,9 +88,37 @@ function Home() {
           <p className="text-base">On hand team for any issues you have</p>
         </div>
       </div>
-      <div className="flex flex-col items-center md:flex-row justify-center gap-2 my-20">
+      <div className="flex flex-col items-center justify-center gap-10 my-20">
         <h1 className="font-bold text-3xl md:text-5xl">Choose your location</h1>
-        <div className=""></div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2">
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">Piazza</h1>
+            <img src={piazza} alt="piazza" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">Bole</h1>
+            <img src={bole} alt="bole" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">4Kilo</h1>
+            <img src={aratkilo} alt="aratkilo" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">Mexico</h1>
+            <img src={mexico} alt="mexico" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">CMC</h1>
+            <img src={cmc} alt="cmc" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1 className="font-bold text-2xl">Ayat</h1>
+            <img src={ayat} alt="ayat" className="object-cover h-[196px] w-[196px] rounded-3xl"/>
+          </div>
+        </div>
+        <div className="relative flex items-center justify-center">
+          <img src={home3} alt="Banner Image"/>
+        </div>
       </div>
     </div>
   )
