@@ -7,7 +7,7 @@ function Login() {
     const [password, setPassword] = useState('');
   return (
     <div>
-      <div className="flex justify-evenly items-center gap-10 pr-32 h-[781px]">
+      <div className="flex justify-center items-center gap-4 my-4">
         <div className="">
           <img src={login} alt="Login Page" className='hidden md:block w-[750px]'/>
         </div>
@@ -18,7 +18,7 @@ function Login() {
             {/* {error&& <p className="text-red-500">{error}</p>} */}
           </div>
           <form className="flex flex-col justify-start gap-10">
-            <input type="text" placeholder="username or email" onChange={(e)=>setUsername(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
+            <input type="text" placeholder="email" onChange={(e)=>setUsername(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
             <input type="text" placeholder="password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
             <div className="flex justify-between items-center">
               <button className="text-white w-36 py-3 bg-emerald-800 hover:bg-opacity-40 active:bg-emerald-800 text-base rounded-md" type="submit">Login</button>
