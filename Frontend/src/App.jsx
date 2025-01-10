@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import About from './pages/About';
 import Signup from './pages/Signup';
 import Error from './pages/Error';
+import Property from './pages/Property';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path='/' element={<SharedLayout/>}>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/property' element={<Property/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route index element={<Home/>}/>
         <Route path='/about' element={<About/>}/>

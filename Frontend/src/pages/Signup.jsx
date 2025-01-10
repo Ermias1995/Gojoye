@@ -2,7 +2,9 @@ import { NavLink } from 'react-router-dom';
 import google from '../assets/google.png';
 import signup from '../assets/signup.jpeg';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {toast} from 'react-toastify';
 
 function Signup() {
 
@@ -14,6 +16,7 @@ function Signup() {
   const [securityAnswer, setSecurityAnswer] = useState(''); // Optional
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
@@ -31,6 +34,8 @@ function Signup() {
         securityAnswer, 
       });
       console.log(res);
+      toast.success('Account created successfully');
+      navigate('/login');
     }catch(error){
       console.log(error);
       setError(error.res ? error.res.data.message : 'Signup failed');
@@ -54,7 +59,7 @@ function Signup() {
         <form className="flex flex-col justify-center md:justify-start gap-10" onSubmit={handleSubmit}>
           <input type="text" placeholder="Username" onChange={(e)=>setUserName(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
           <input type="email" placeholder="Enter Email or Phone Number" onChange={(e)=>setEmail(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
-          <input type="text" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
+          <input type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
           <select onChange={(e) => setUserType(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required>
             <option value="">Select User Type</option>
             <option value="renter">Renter/Buyer</option>
