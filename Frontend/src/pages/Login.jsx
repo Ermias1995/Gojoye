@@ -1,13 +1,30 @@
 import login from '../assets/login.jpeg';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        const res = await axios.post('http://localhost:3000/auth/login', {
+          email,
+          password
+        });
+        console.log(res.data);
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
   return (
     <div>
-      <div className="flex justify-evenly items-center gap-10 pr-32 h-[781px]">
+      <div className="flex justify-center items-center gap-4 my-4">
         <div className="">
           <img src={login} alt="Login Page" className='hidden md:block w-[750px]'/>
         </div>
@@ -17,8 +34,8 @@ function Login() {
             <p className="text-base">Enter your detail below</p>
             {/* {error&& <p className="text-red-500">{error}</p>} */}
           </div>
-          <form className="flex flex-col justify-start gap-10">
-            <input type="text" placeholder="username or email" onChange={(e)=>setUsername(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
+          <form className="flex flex-col justify-start gap-10" onSubmit={handleLogin}>
+            <input type="text" placeholder="email" onChange={(e)=>setEmail(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
             <input type="text" placeholder="password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none"/>
             <div className="flex justify-between items-center">
               <button className="text-white w-36 py-3 bg-emerald-800 hover:bg-opacity-40 active:bg-emerald-800 text-base rounded-md" type="submit">Login</button>
