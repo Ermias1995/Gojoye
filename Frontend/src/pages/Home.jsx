@@ -145,6 +145,23 @@ function Home() {
             </div>
           </div>
         </div>
+        <div className="flex flex-col items-center justify-center gap-10 my-20">
+          <h1 className="font-bold text-3xl md:text-5xl">Frequently Asked Questions</h1>
+          <div className="flex flex-col items-center justify-center gap-8">
+            <details className="flex flex-col items-start justify-center gap-4 p-8 rounded-3xl bg-[#F2F0F2] md:w-11/12 w-80">
+              <summary className="font-bold text-xl cursor-pointer">How do I list my property?</summary>
+              <p className="text-lg">To list your property, simply sign up for an account, navigate to the "List Property" section, and fill out the required details about your property.</p>
+            </details>
+            <details className="flex flex-col items-start justify-center gap-4 p-8 rounded-3xl bg-[#F2F0F2] md:w-11/12 w-80">
+              <summary className="font-bold text-xl cursor-pointer">What are the fees for listing a property?</summary>
+              <p className="text-lg">Listing a property on our platform is free. However, we charge a small commission fee once your property is rented or sold.</p>
+            </details>
+            <details className="flex flex-col items-start justify-center gap-4 p-8 rounded-3xl bg-[#F2F0F2] md:w-11/12 w-80">
+              <summary className="font-bold text-xl cursor-pointer">How can I contact support?</summary>
+              <p className="text-lg">You can contact our support team 24/7 through the "Contact Us" section on our website or by calling our support hotline.</p>
+            </details>
+          </div>
+        </div>
       </div>
     </div>
   )

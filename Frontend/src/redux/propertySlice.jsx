@@ -12,7 +12,7 @@ const getToken = () => {
 };
 
 export const fetchProperties = createAsyncThunk('properties/fetchProperties', async () => {
-    const response = await axios.get('http://localhost:3000/properties');
+    const response = await axios.get('https://gojoye-backend.onrender.com/properties');
     console.log(response);
     return response.data;
 });
@@ -20,7 +20,7 @@ export const fetchProperties = createAsyncThunk('properties/fetchProperties', as
 export const addProperty = createAsyncThunk(
     'properties/addProperty',
     async (property) => {
-        const response = await axios.post('http://localhost:3000/properties/add', property, {
+        const response = await axios.post('https://gojoye-backend.onrender.com/add', property, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Include the token
             }
@@ -32,7 +32,7 @@ export const addProperty = createAsyncThunk(
 export const updateProperty = createAsyncThunk(
     'properties/updateProperty',
     async ({ id, property }) => {
-        const response = await axios.put(`http://localhost:3000/properties/${id}`, property, {
+        const response = await axios.put(`https://gojoye-backend.onrender.com/properties/${id}`, property, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Include the token
             }
@@ -44,7 +44,7 @@ export const updateProperty = createAsyncThunk(
 export const deleteProperty = createAsyncThunk(
     'properties/deleteProperty',
     async (id) => {
-        await axios.delete(`http://localhost:3000/properties/${id}`, {
+        await axios.delete(`https://gojoye-backend.onrender.com/properties/${id}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Include the token
             }

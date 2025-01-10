@@ -16,8 +16,6 @@ function Navbar() {
     userType: state.auth.userType,
   }));
 
-  console.log(userType);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

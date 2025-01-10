@@ -25,7 +25,7 @@ function Signup() {
     setError(null);
 
     try{
-      const res = await axios.post('http://localhost:3000/auth/register', {
+      const res = await axios.post('https://gojoye-backend.onrender.com/auth/register', {
         username,
         email,
         password,
