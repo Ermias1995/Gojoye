@@ -181,150 +181,324 @@ Thank you for your cooperation!
 ## Review Endpoints
 
 ### Add a Review
-**POST** `/review`
+**POST** /review
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**:
-  - `property` (string, required): The ID of the property being reviewed.
-  - `user` (string, required): The ID of the user submitting the review.
-  - `rating` (number, required): The rating for the property.
-  - `comment` (string, optional): The review comment.
-- **Response**:
-  - `201 Created`: Review added successfully.
-  - `400 Bad Request`: User has already reviewed the property.
-  - `404 Not Found`: Property not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "property": "string (required)",
+  "user": "string (required)",
+  "rating": "number (required)",
+  "comment": "string (optional)"
+}
+
+Response:
+201 Created: {
+  "message": "Review added successfully"
+}
+
+400 Bad Request: {
+  "error": "User has already reviewed the property"
+}
+
+404 Not Found: {
+  "error": "Property not found"
+}
+```
 
 ### Get Reviews for a Property
-**GET** `/review/:propertyId`
+**GET** /review/:propertyId
 
-- **Parameters**:
-  - `propertyId` (string, required): The ID of the property.
-- **Response**:
-  - `200 OK`: Array of reviews.
-  - `404 Not Found`: No reviews found for the property.
+```json
+Parameters: {
+  "propertyId": "string (required)"
+}
+
+Response:
+200 OK: [
+  {
+    "user": "string",
+    "rating": "number",
+    "comment": "string",
+    "date": "string"
+  }
+]
+
+404 Not Found: {
+  "error": "No reviews found for the property"
+}
+```
 
 ### Update a Review
-**PUT** `/review/:id`
+**PUT** /review/:id
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**:
-  - `rating` (number, optional): The updated rating.
-  - `comment` (string, optional): The updated comment.
-- **Response**:
-  - `200 OK`: Review updated successfully.
-  - `403 Forbidden`: User is not authorized to update this review.
-  - `404 Not Found`: Review not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "rating": "number (optional)",
+  "comment": "string (optional)"
+}
+
+Response:
+200 OK: {
+  "message": "Review updated successfully"
+}
+
+403 Forbidden: {
+  "error": "User is not authorized to update this review"
+}
+
+404 Not Found: {
+  "error": "Review not found"
+}
+```
 
 ### Delete a Review
-**DELETE** `/review/:id`
+**DELETE** /review/:id
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**:
-  - `200 OK`: Review deleted successfully.
-  - `403 Forbidden`: User is not authorized to delete this review.
-  - `404 Not Found`: Review not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Response:
+200 OK: {
+  "message": "Review deleted successfully"
+}
+
+403 Forbidden: {
+  "error": "User is not authorized to delete this review"
+}
+
+404 Not Found: {
+  "error": "Review not found"
+}
+```
 
 ---
 
 ## Property Endpoints
 
 ### Add a Property
-**POST** `/property/add`
+**POST** /property/add
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**: Property details.
-- **Response**:
-  - `201 Created`: Property added successfully.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "propertyDetails": "object"
+}
+
+Response:
+201 Created: {
+  "message": "Property added successfully"
+}
+```
 
 ### Update a Property
-**PUT** `/property/:id`
+**PUT** /property/:id
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**: Updated property details.
-- **Response**:
-  - `200 OK`: Property updated successfully.
-  - `404 Not Found`: Property not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "updatedDetails": "object"
+}
+
+Response:
+200 OK: {
+  "message": "Property updated successfully"
+}
+
+404 Not Found: {
+  "error": "Property not found"
+}
+```
 
 ### Delete a Property
-**DELETE** `/property/:id`
+**DELETE** /property/:id
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**:
-  - `200 OK`: Property deleted successfully.
-  - `404 Not Found`: Property not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Response:
+200 OK: {
+  "message": "Property deleted successfully"
+}
+
+404 Not Found: {
+  "error": "Property not found"
+}
+```
 
 ### Get a Property
-**GET** `/property/:id`
+**GET** /property/:id
 
-- **Response**:
-  - `200 OK`: Property details.
-  - `404 Not Found`: Property not found.
+```json
+Response:
+200 OK: {
+  "propertyDetails": "object"
+}
 
-### Get All property
-**GET** `/property`
+404 Not Found: {
+  "error": "Property not found"
+}
+```
 
-- **Response**:
-  - `200 OK`: Array of property.
+### Get All Properties
+**GET** /property
 
-### Search property
-**GET** `/property/search`
+```json
+Response:
+200 OK: [
+  {
+    "propertyDetails": "object"
+  }
+]
+```
 
-- **Query Parameters**:
-  - `minPrice`, `maxPrice`, `location`, `bedrooms`, `bathrooms`, `propertyType`.
-- **Response**:
-  - `200 OK`: Array of matching property.
-  - `404 Not Found`: No property match the criteria.
+### Search Properties
+**GET** /property/search
+
+```json
+Query Parameters: {
+  "minPrice": "number",
+  "maxPrice": "number",
+  "location": "string",
+  "bedrooms": "number",
+  "bathrooms": "number",
+  "propertyType": "string"
+}
+
+Response:
+200 OK: [
+  {
+    "propertyDetails": "object"
+  }
+]
+
+404 Not Found: {
+  "error": "No property matches the criteria"
+}
+```
 
 ---
 
 ## Inquiry Endpoints
 
 ### Add an Inquiry
-**POST** `/inquiry`
+**POST** /inquiry
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**: Inquiry details.
-- **Response**:
-  - `201 Created`: Inquiry sent successfully.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
 
-### Get inquiry for a Landlord
-**GET** `/inquiry/:landlordId`
+Body Parameters: {
+  "inquiryDetails": "object"
+}
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**:
-  - `200 OK`: Array of inquiry.
+Response:
+201 Created: {
+  "message": "Inquiry sent successfully"
+}
+```
+
+### Get Inquiries for a Landlord
+**GET** /inquiry/:landlordId
+
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Response:
+200 OK: [
+  {
+    "inquiryDetails": "object"
+  }
+]
+```
 
 ---
 
 ## Checkout Endpoints
 
 ### Start Checkout
-**POST** `/checkout/:propertyId`
+**POST** /checkout/:propertyId
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**:
-  - `moveInDate` (date, required for rentals): Move-in date.
-  - `rentalDuration` (number, required for rentals): Duration of rental.
-  - `buyerInfo` (object, required for sales): `{ fullName, contact }`.
-  - `paymentMethod` (string, required): Payment method.
-- **Response**:
-  - `201 Created`: Booking successful.
-  - `400 Bad Request`: Missing required fields.
-  - `404 Not Found`: Property not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "moveInDate": "date (required for rentals)",
+  "rentalDuration": "number (required for rentals)",
+  "buyerInfo": {
+    "fullName": "string",
+    "contact": "string"
+  },
+  "paymentMethod": "string (required)"
+}
+
+Response:
+201 Created: {
+  "message": "Booking successful"
+}
+
+400 Bad Request: {
+  "error": "Missing required fields"
+}
+
+404 Not Found: {
+  "error": "Property not found"
+}
+```
 
 ### Make a Payment
-**POST** `/checkout/payment`
+**POST** /checkout/payment
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Body Parameters**:
-  - `amount` (number, required): Payment amount.
-- **Response**:
-  - `200 OK`: `clientSecret` for Stripe payment.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Body Parameters: {
+  "amount": "number (required)"
+}
+
+Response:
+200 OK: {
+  "clientSecret": "string"
+}
+```
 
 ### Confirm Payment
-**PUT** `/checkout/confirm/:id`
+**PUT** /checkout/confirm/:id
 
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**:
-  - `200 OK`: Payment confirmed.
-  - `404 Not Found`: Booking not found.
+```json
+Headers: {
+  "Authorization": "Bearer <token>"
+}
+
+Response:
+200 OK: {
+  "message": "Payment confirmed"
+}
+
+404 Not Found: {
+  "error": "Booking not found"
+}
