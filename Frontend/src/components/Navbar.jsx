@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { VscThreeBars } from "react-icons/vsc";
+import { MdAccountCircle } from "react-icons/md";
 import logo from "../assets/logo.jpeg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +40,7 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('token');
     navigate('/login');
   };
 
@@ -146,7 +148,7 @@ function Navbar() {
                 )}
                 <hr className="border-gray-300 w-full" />
                 {isLoggedIn ? (
-                  <span className="flex justify-center py-2 w-full text-center">{username}</span>
+                  <span className="flex justify-center py-2 w-full text-center font-semibold text-primary"><MdAccountCircle/>{username}</span>
                 ) : (
                   <div className="flex gap-2">
                     <NavLink to='/login' className="bg-blue-600 hover:bg-blue-500 active:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200 ease-in-out transform hover:scale-105">Login</NavLink>
@@ -158,7 +160,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="h-40"></div>
+      <div className="h-20"></div>
     </div>
   )
 }

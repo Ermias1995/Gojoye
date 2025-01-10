@@ -50,13 +50,13 @@ function Signup() {
       <div className="bg-[#CBE4E8]">
         <img src={signup} alt="Signup Page" className='hidden md:block w-[750px]'/>
       </div>
-      <div className="flex flex-col justify-center md:justify-start gap-12 w-[370px]">
+      <div className="flex flex-col justify-center md:justify-start gap-4 w-[370px]">
         <div className="flex flex-col justify-center md:justify-start gap-3">
           <h1 className="text-4xl">Create an account</h1>
           <p className="text-base">Enter your detail below</p>
           {error && <p className="text-red-500">{error}</p>}
         </div>
-        <form className="flex flex-col justify-center md:justify-start gap-10" onSubmit={handleSubmit}>
+        <form className="flex flex-col justify-center md:justify-start gap-6" onSubmit={handleSubmit}>
           <input type="text" placeholder="Username" onChange={(e)=>setUserName(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
           <input type="email" placeholder="Enter Email or Phone Number" onChange={(e)=>setEmail(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>
           <input type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} className="border-[#808080] border-b-[1px] focus:outline-none" required/>

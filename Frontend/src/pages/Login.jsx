@@ -1,5 +1,5 @@
 import login from '../assets/login.jpeg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -15,6 +15,14 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            dispatch(setCredentials({ token }));
+            navigate('/');
+        }
+    }, [dispatch, navigate]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -22,7 +30,9 @@ function Login() {
                 email,
                 password,
             });
-            dispatch(setCredentials({ token: res.data.accessToken })); // Dispatch action to set credentials
+            const token = res.data.accessToken;
+            localStorage.setItem('token', token); // Store token in local storage
+            dispatch(setCredentials({ token })); // Dispatch action to set credentials
 
             toast.success('Login successful!'); // Show success message
             navigate('/');
