@@ -6,6 +6,7 @@ import About from './pages/About';
 import Signup from './pages/Signup';
 import Error from './pages/Error';
 import Property from './pages/Property';
+import PropertyDetail from './pages/PropertyDetail';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<SharedLayout/>}>
         <Route path='/login' element={<Login/>}/>
         <Route path='/property' element={<Property/>}/>
+        <Route path="/properties/:id" element={<PropertyDetail/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route index element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
