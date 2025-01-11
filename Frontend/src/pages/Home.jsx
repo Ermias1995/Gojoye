@@ -10,13 +10,12 @@ import cmc from '../assets/cmc.jpg';
 import ayat from '../assets/ayat.jpg';
 import home3 from '../assets/home3.png';
 import { useState } from "react";
+import {Link} from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 function Home() {
   const [subCity, setSubCity] = useState('');
-  const navigateToBooking = () => {
-    window.location.href = '/booking';
-  };
-
+  const userType = useSelector(state => state.auth.userType);
   return (
     <div> 
       <div className="flex flex-col items-center h-[720px] w-full relative">
@@ -31,7 +30,7 @@ function Home() {
         </div>
         <div className="flex items-center justify-center absolute top-[660px] mt-10 border-4 border-primary rounded-r-full rounded-l-full">
           <select onChange={(e) => setSubCity(e.target.value)} className="border-b-[1px] focus:outline-none p-2 w-11/12 md:w-96 border border-gray-300 rounded-l-full">
-            <option value="">Select subcity</option>
+            <option value="">Subcity Included</option>
             <option value="Addis Ketema">Addis Ketema</option>
             <option value="Akaki Kaliti">Akaki Kaliti</option>
             <option value="Arada">Arada</option>
@@ -45,7 +44,7 @@ function Home() {
             <option value="Yeka">Yeka</option>
             <option value="Lemi Kura">Lemi Kura</option>
           </select>
-          <button className="bg-primary text-white p-3 rounded-r-full"><FaSearch/></button>
+          <Link to='/blog' className="bg-primary text-white p-3 rounded-r-full"><FaSearch/></Link>
         </div>
       </div>
       <div className="flex items-center justify-center my-20">
@@ -125,7 +124,10 @@ function Home() {
           <div className="flex md:flex-col items-start absolute top-1/3 left-5 md:left-10 md:w-2/5 gap-3">
             <h1 className='font-bold text-3xl md:text-5xl text-white'>Free Spaces</h1>
             <p className='text-lg text-white hidden md:block'>Designed to provide outstanding living spaces that meet the needs of flexible renters and discerning buyers.</p>
-            <button onClick={navigateToBooking} className="bg-primary text-white p-3 rounded-full mt-4">Start Booking</button>
+            {userType === 'renter'?
+            <Link to='/property' className="bg-primary text-white p-3 rounded-full mt-4">Start Booking</Link>
+            :<Link to='/property' className="bg-primary text-white p-3 px-4 rounded-full mt-4">Rent | Sell</Link>}
+            
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-10 my-20">

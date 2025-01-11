@@ -64,7 +64,7 @@ function Signup() {
             <option value="">Select User Type</option>
             <option value="renter">Renter/Buyer</option>
             <option value="landlord">Landlord</option>
-            <option value="admin">Admin</option>
+            {/* <option value="admin">Admin</option> */}
           </select>
           <input
               type="text"
@@ -80,7 +80,7 @@ function Signup() {
           />
           <div className="flex flex-col justify-center md:justify-start gap-6">
             <button className="text-white py-3 bg-[#EA4335] text-base w-full rounded-[4px]" type='submit' disabled={loading}>{loading ? "Creating Account...":"Create Account"}</button>
-            <button className="flex gap-1 items-center justify-center py-3 text-base w-full border border-[#808080] rounded-[4px]"><img src={google} alt="Google" className="w-6 h-6"/>Sign up with Google</button>
+            {/* <button className="flex gap-1 items-center justify-center py-3 text-base w-full border border-[#808080] rounded-[4px]"><img src={google} alt="Google" className="w-6 h-6"/>Sign up with Google</button> */}
             <p className="text-[#808080] pl-16 flex gap-2">Already have account?<NavLink to="/login" className="underline font-medium">Log in</NavLink></p>
           </div>
         </form>

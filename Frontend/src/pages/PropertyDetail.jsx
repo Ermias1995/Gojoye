@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -43,9 +43,18 @@ const PropertyDetail = () => {
                         <p className="text-gray-600">Added By: {property.landlord?.username || 'Unknown'}</p>
                         <p className="text-gray-600">Email: {property.landlord?.email || 'N/A'}</p>
                         <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.price}</p>
+                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.amenities[0]}</p>
+                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.propertyType}</p>
+                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.transactionType}</p>
                         <p className="mt-4"><strong>Bedrooms:</strong> {property.bedrooms}</p>
                         <p><strong>Bathrooms:</strong> {property.bathrooms}</p>
                         {/* Add more property details as needed */}
+
+                        <Link to={`/checkout/${property._id}`}>
+                            <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                Proceed to Checkout
+                            </button>
+                        </Link>
                     </div>
                 </div>
             ) : (

@@ -7,6 +7,7 @@ import Signup from './pages/Signup';
 import Error from './pages/Error';
 import Property from './pages/Property';
 import PropertyDetail from './pages/PropertyDetail';
+import Checkout from './pages/Checkout';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/property' element={<Property/>}/>
         <Route path="/properties/:id" element={<PropertyDetail/>}/>
+        <Route path="/checkout/:propertyId" element={<Checkout />} />
         <Route path='/signup' element={<Signup/>}/>
         <Route index element={<Home/>}/>
         <Route path='/about' element={<About/>}/>

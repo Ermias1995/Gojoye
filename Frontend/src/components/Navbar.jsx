@@ -75,9 +75,9 @@ function Navbar() {
               )}
               {isLoggedIn && userType === 'renter' && (
                 <>
-                  <NavLink to='/landlords' className="mx-2 active:font-semibold hover:text-gray-500">Landlords</NavLink>
+                  {/* <NavLink to='/landlords' className="mx-2 active:font-semibold hover:text-gray-500">Landlords</NavLink> */}
                   <NavLink to='/property' className="mx-2 active:font-semibold hover:text-gray-500">Properties</NavLink>
-                  <NavLink to='/checkout' className="mx-2 active:font-semibold hover:text-gray-500">Checkout</NavLink>
+                  {/* <NavLink to='/checkout' className="mx-2 active:font-semibold hover:text-gray-500">Checkout</NavLink> */}
                 </>
               )}
               {isLoggedIn && userType === 'landlord' && (
