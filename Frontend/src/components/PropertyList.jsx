@@ -8,6 +8,7 @@ const PropertyList = () => {
     const dispatch = useDispatch();
     const { properties, loading, error } = useSelector((state) => state.properties);
     const { userType } = useSelector((state) => ({userType: state.auth.userType}));
+    const { isLoggedIn } = useSelector((state) => ({isLoggedIn: state.auth.isLoggedIn}));
 
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -50,8 +51,8 @@ const PropertyList = () => {
                             <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.price}</p>
                            
                             <div className="flex items-center gap-2">
-                            <Link to={`/properties/${property._id}`} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">See Details</Link>
-                           {userType == 'landlord' && <div className='flex items-center gap-2'>
+                            { isLoggedIn && <Link to={`/properties/${property._id}`} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">See Details</Link>}
+                           {isLoggedIn && userType == 'landlord' &&  <div className='flex items-center gap-2'>
                             <button className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
                                 onClick={(e) => {
                                     e.stopPropagation();

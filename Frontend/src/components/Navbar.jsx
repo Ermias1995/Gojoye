@@ -74,16 +74,10 @@ function Navbar() {
                 </>
               )}
               {isLoggedIn && userType === 'renter' && (
-                <>
-                  {/* <NavLink to='/landlords' className="mx-2 active:font-semibold hover:text-gray-500">Landlords</NavLink> */}
-                  <NavLink to='/property' className="mx-2 active:font-semibold hover:text-gray-500">Properties</NavLink>
-                  {/* <NavLink to='/checkout' className="mx-2 active:font-semibold hover:text-gray-500">Checkout</NavLink> */}
-                </>
+                <NavLink to='/property' className="mx-2 active:font-semibold hover:text-gray-500">Find a Home</NavLink>
               )}
               {isLoggedIn && userType === 'landlord' && (
-                <>
-                  <NavLink to='/property' className="mx-2 active:font-semibold hover:text-gray-500">Property</NavLink>
-                </>
+                <NavLink to='/property' className="mx-2 active:font-semibold hover:text-gray-500">My Properties</NavLink>
               )}
               {isLoggedIn && (
                 <NavLink to='/contacts' className="mx-2 active:font-semibold hover:text-gray-500">Contacts</NavLink>
@@ -92,19 +86,14 @@ function Navbar() {
             <div className="hidden sm:flex items-center justify-evenly gap-3">
               {isLoggedIn ? (
                 <div className="relative inline-block">
-                  <button 
-                    className="text-blue-600 font-medium" 
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                  >
+                  <button className="text-blue-600 font-medium flex items-center" onClick={() => setDropdownOpen(!dropdownOpen)}>
                     {username}
+                    <p className="bg-yellow-200 text-orange-500 text-xs p-0.5 rounded">{userType}</p>
                   </button>
                   {dropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
                       <NavLink to='/profile' className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</NavLink>
-                      <button 
-                        onClick={handleLogout} 
-                        className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      >
+                      <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">
                         Logout
                       </button>
                     </div>
@@ -147,8 +136,9 @@ function Navbar() {
                   <NavLink to='/contacts' className="flex items-center justify-center py-2 w-full active:font-semibold hover:bg-primary hover:bg-opacity-70 hover:text-white duration-150">Contacts</NavLink>
                 )}
                 <hr className="border-gray-300 w-full" />
-                {isLoggedIn ? (
+                {isLoggedIn ? (<>
                   <span className="flex justify-center py-2 w-full text-center font-semibold text-primary"><MdAccountCircle/>{username}</span>
+                  </>
                 ) : (
                   <div className="flex gap-2">
                     <NavLink to='/login' className="bg-blue-600 hover:bg-blue-500 active:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200 ease-in-out transform hover:scale-105">Login</NavLink>

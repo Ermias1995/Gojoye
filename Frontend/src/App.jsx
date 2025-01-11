@@ -8,6 +8,8 @@ import Error from './pages/Error';
 import Property from './pages/Property';
 import PropertyDetail from './pages/PropertyDetail';
 import Checkout from './pages/Checkout';
+import Blog from './pages/Blog';
+import Contact from './pages/Contact'; 
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
     <Routes>
       <Route path='/' element={<SharedLayout/>}>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/blog' element={<Blog/>}/>
+        <Route path='/contacts' element={<Contact/>}/>
         <Route path='/property' element={<Property/>}/>
         <Route path="/properties/:id" element={<PropertyDetail/>}/>
         <Route path="/checkout/:propertyId" element={<Checkout />} />

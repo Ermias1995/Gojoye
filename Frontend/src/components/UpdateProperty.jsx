@@ -34,7 +34,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
     if (!isOpen || !property) return null; // Return null if modal is not open or property data is not available
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 mt-20">
             <div className="bg-white p-6 rounded shadow-md w-1/2">
                 <h2 className="text-2xl font-bold mb-4">Update Property</h2>
                 <form onSubmit={handleUpdate}>
@@ -45,7 +45,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
                             name="title"
                             value={property.title}
                             onChange={handleChange}
-                            className="rounded p-2 w-full mb-4"
+                            className="rounded bg-gray-500 text-white p-2 w-full"
                             required
                         />
                     </div>
@@ -55,7 +55,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
                             name="description"
                             value={property.description}
                             onChange={handleChange}
-                            className="border border-gray-300 rounded p-2 w-full mb-4"
+                            className="rrounded bg-gray-500 text-white p-2 w-full"
                             required
                         />
                     </div>
@@ -66,7 +66,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
                             name="price"
                             value={property.price}
                             onChange={handleChange}
-                            className="border border-gray-300 rounded p-2 w-full mb-4"
+                            className="rounded bg-gray-500 text-white p-2 w-full"
                             required
                         />
                     </div>
@@ -77,7 +77,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
                             name="address"
                             value={property.location?.address || ''}
                             onChange={(e) => handleChange({ target: { name: 'location', value: { ...property.location, address: e.target.value } } })}
-                            className="border border-gray-300 rounded p-2 w-full mb-4"
+                            className="rounded bg-gray-500 text-white p-2 w-full"
                             required
                         />
                     </div>
@@ -88,7 +88,7 @@ const UpdateProperty = ({ isOpen, onClose, propertyData }) => {
                             name="city"
                             value={property.location?.city || ''}
                             onChange={(e) => handleChange({ target: { name: 'location', value: { ...property.location, city: e.target.value } } })}
-                            className="border border-gray-300 rounded p-2 w-full mb-4"
+                            className="rounded bg-gray-500 text-white p-2 w-full mb-2"
                             required
                         />
                     </div>

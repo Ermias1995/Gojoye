@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const PropertyDetail = () => {
-    const { id } = useParams(); // Get the property ID from the URL
+    const { id } = useParams(); 
     const [property, setProperty] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const { userType } = useSelector((state) => ({userType: state.auth.userType}));
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -32,27 +35,33 @@ const PropertyDetail = () => {
     return (
         <div className="container mx-auto p-4 mt-10">
             {property ? (
-                <div className="bg-white shadow-md rounded-lg overflow-hidden">
-                    {property.images && property.images.length > 0 && (
-                        <img className="w-full h-64 object-cover" src={property.images[0]} alt={property.title} />
-                    )}
-                    <div className="p-4">
-                        <h2 className="text-3xl font-bold">{property.title}</h2>
+                <div className="flex  justify-evenly bg-white rounded-lg overflow-hidden">
+                    {property.images && property.images.length > 0 && (<div className='flex flex-col w-2/3'>
+                        <img className="h-96 object-cover" src={property.images[0]} alt={property.title} />
+                        <h2 className="text-3xl font-bold text-primary mt-4">{property.title}</h2>
                         <p className="text-gray-600">{property.description}</p>
                         <p className="text-gray-600">Location: {property.location.address}, {property.location.city}</p>
                         <p className="text-gray-600">Added By: {property.landlord?.username || 'Unknown'}</p>
                         <p className="text-gray-600">Email: {property.landlord?.email || 'N/A'}</p>
-                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.price}</p>
-                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.amenities[0]}</p>
-                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.propertyType}</p>
-                        <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.transactionType}</p>
+                        </div>
+                    )}
+                    <div className="p-4 bg-slate-50 rounded">
+                        <p className="text-xl  text-gray-800 mt-2">Price: {property.price} Birr</p>
+                        <p className="text-xl  text-gray-800 mt-2">Amenities: {property.amenities}</p>
+                        <p className="text-xl  text-gray-800 mt-2">Property Type: {property.propertyType}</p>
+                        <p className="text-xl  text-gray-800 mt-2">Transaction Type: {property.transactionType}</p>
                         <p className="mt-4"><strong>Bedrooms:</strong> {property.bedrooms}</p>
                         <p><strong>Bathrooms:</strong> {property.bathrooms}</p>
                         {/* Add more property details as needed */}
 
-                        <Link to={`/checkout/${property._id}`}>
+                        {userType === 'renter' && <Link to={`/checkout/${property._id}`}>
                             <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
                                 Proceed to Checkout
+                            </button>
+                        </Link>}
+                        <Link to='/property'>
+                            <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                Back to Properties
                             </button>
                         </Link>
                     </div>

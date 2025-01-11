@@ -70,22 +70,22 @@ function Home() {
         </div>
       </div>
       <div className="flex flex-col items-center md:flex-row justify-center gap-2 my-20">
-        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8]">
-          <p className="text-4xl md:text-6xl"><GiSofa/></p>
+        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8] hover:scale-105">
+          <p className="text-4xl md:text-6xl"><FaCalendar/></p>
           <h1 className="text-2xl font-bold">Flexible living</h1>
           <p className="text-base">Stay as Long or as little as you need with month-to-month</p>
         </div>
-        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8]">
+        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8] hover:scale-105">
           <p className="text-4xl md:text-6xl"><GiSofa/></p>
           <h1 className="text-2xl font-bold">Move-in ready</h1>
           <p className="text-base">Ready to move in with everything you need</p>
         </div>
-        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8]">
+        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8] hover:scale-105">
           <p className="text-4xl md:text-6xl"><FaWifi/></p>
           <h1 className="text-2xl font-bold">High-speed Wi-Fi</h1>
           <p className="text-base">Best in class internet speeds suitable for working from home</p>
         </div>
-        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8]">
+        <div className="flex flex-col items-start justify-center w-11/12 md:w-72 gap-4 p-8 rounded-3xl bg-[#E2F1E8] hover:scale-105">
           <p className="text-4xl md:text-6xl"><FaCommentDots/></p>
           <h1 className="text-2xl font-bold">24/7 support</h1>
           <p className="text-base">On hand team for any issues you have</p>
