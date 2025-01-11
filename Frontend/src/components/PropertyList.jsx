@@ -29,6 +29,8 @@ const PropertyList = () => {
                         <div className="p-4">
                             <h3 className="text-lg font-semibold">{property.title}</h3>
                             <p className="text-gray-600">{property.description}</p>
+                            <p className="text-gray-600">Location: {property.location.address}, {property.location.city}</p>
+                            <p className="text-gray-600">Added By: {property.addedBy}</p>
                             <p className="text-xl font-bold text-gray-800 mt-2">Price: ${property.price}</p>
                             <button 
                                 className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"

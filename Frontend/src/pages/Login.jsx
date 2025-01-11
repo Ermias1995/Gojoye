@@ -12,6 +12,9 @@ function Login() {
     const [error, setError] = useState('');
     const [resetEmail, setResetEmail] = useState('');
     const [resetRequested, setResetRequested] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [resetCode, setResetCode] = useState('');
+    const [resetComplete, setResetComplete] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -31,14 +34,14 @@ function Login() {
                 password,
             });
             const token = res.data.accessToken;
-            localStorage.setItem('token', token); // Store token in local storage
-            dispatch(setCredentials({ token })); // Dispatch action to set credentials
+            localStorage.setItem('token', token); 
+            dispatch(setCredentials({ token })); 
 
-            toast.success('Login successful!'); // Show success message
+            toast.success('Login successful!'); 
             navigate('/');
         } catch (error) {
             setError('Login failed. Please check your credentials.');
-            toast.error('Login failed. Please check your credentials.'); // Show error message
+            toast.error('Login failed. Please check your credentials.'); 
             console.log(error);
         }
     };
@@ -51,10 +54,29 @@ function Login() {
             });
             console.log(res.data);
             setResetRequested(true);
-            toast.success('Reset password link sent!'); // Show success message
+            toast.success('Reset password link sent!'); 
         } catch (error) {
             setError('Error sending reset password email.');
-            toast.error('Error sending reset password email.'); // Show error message
+            toast.error('Error sending reset password email.'); 
+            console.log(error);
+        }
+    };
+
+    const handleVerifyOTP = async (e) => {
+        e.preventDefault();
+        try {
+            // Call the backend to verify the OTP
+            const res = await axios.post('https://gojoye-backend.onrender.com/auth/reset-password', {
+                email: resetEmail,
+                otp: resetCode,
+                newPassword,
+            });
+            console.log(res.data);
+            setResetComplete(true);
+            toast.success('Password reset successfully!'); 
+        } catch (error) {
+            setError('Error resetting password: ' + (error.response?.data?.message || error.message));
+            toast.error('Error resetting password.'); 
             console.log(error);
         }
     };
@@ -101,7 +123,7 @@ function Login() {
                         </div>
                     </form>
 
-                    {resetRequested && (
+                    {resetRequested && !resetComplete && (
                         <form className="flex flex-col justify-start gap-10" onSubmit={handleResetPassword}>
                             <input 
                                 type="text" 
@@ -116,6 +138,33 @@ function Login() {
                                 Send Reset Link
                             </button>
                         </form>
+                    )}
+
+                    {resetRequested && !resetComplete && (
+                        <form className="flex flex-col justify-start gap-10" onSubmit={handleVerifyOTP}>
+                            <input 
+                                type="text" 
+                                placeholder="Enter your OTP" 
+                                onChange={(e) => setResetCode(e.target.value)} 
+                                className="border-[#808080] border-b-[1px] focus:outline-none"
+                            />
+                            <input 
+                                type="password" 
+                                placeholder="New Password" 
+                                onChange={(e) => setNewPassword(e.target.value)} 
+                                className="border-[#808080] border-b-[1px] focus:outline-none"
+                            />
+                            <button 
+                                className="text-white w-36 py-3 bg-blue-600 hover:bg-opacity-40 active:bg-blue-600 text-base rounded-md" 
+                                type="submit"
+                            >
+                                Reset Password
+                            </button>
+                        </form>
+                    )}
+
+                    {resetComplete && (
+                        <p className="text-green-500">Your password has been reset successfully!</p>
                     )}
                 </div>
             </div>
