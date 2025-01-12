@@ -6,6 +6,7 @@ function Contact() {
         <h2 className="text-2xl font-bold ml-5 mb-4 text-primary">Contact us</h2>
         <div className="flex flex-col justify-center md:flex-row gap-5 md:px-[135px] py-10">
             <div className="flex flex-col gap-1 py-12 px-4 rounded shadow-md w-11/12">
+
                 <h1 className="text-base flex items-center gap-3"><IoCall className="bg-primary rounded-full text-white p-2 text-3xl"/>Call To Us</h1>
                 <p className="text-sm">We are available 24/7, 7 days a week.</p>
                 <p className="text-sm">Phone: +251984837758</p>

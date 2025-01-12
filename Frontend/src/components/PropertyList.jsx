@@ -10,7 +10,9 @@ const PropertyList = () => {
     const { properties, loading, error } = useSelector((state) => state.properties);
     const { userType } = useSelector((state) => ({userType: state.auth.userType}));
     const { isLoggedIn } = useSelector((state) => ({isLoggedIn: state.auth.isLoggedIn}));
+
     const { username } = useSelector((state)=> ({username: state.auth.username}));
+
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState(null);
 
@@ -32,6 +34,7 @@ const PropertyList = () => {
         setSelectedProperty(null); // Clear selected property when closing
     };
 
+
     if (loading) return <Loading/>;
     if (error) return <p className="text-center text-red-500">{error}</p>;
     console.log(selectedProperty);
@@ -48,6 +51,7 @@ const PropertyList = () => {
                             <h3 className="text-lg font-semibold">{property.title}</h3>
                             <p className="text-gray-600">{property.description}</p>
                             <p className="text-gray-600">Location: {property.location.address}, {property.location.city}</p>
+
                             {username === property.landlord.username ? 
                                 <p className="text-gray-600">Added By: <span className='bg-blue-100 text-blue-600 text-xs p-1 rounded'>yourself</span></p>:
                                 <p className="text-gray-600">Added By: <span className='bg-yellow-100 text-orange-500 text-xs p-0.5 rounded'>{property.landlord?.username || 'Unknown'}</span></p>
