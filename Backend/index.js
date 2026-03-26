@@ -18,6 +18,7 @@ app.use(express.json());
 const authRoute = require("./routes/auth");
 const propertyRoutes = require("./routes/property");
 const inquiryRoutes = require("./routes/inquiry");
+// const checkoutRoute = require("./routes/checkout");
 
 const reviewRoute = require("./routes/review");
 app.use("/review", reviewRoute);
@@ -39,6 +40,17 @@ app.use("/properties", propertyRoutes);
 
 // Inquiry route path
 app.use("/inquiries", inquiryRoutes);
+
+// Checkout route path
+// app.use("/checkout", checkoutRoute);
+
+// Basic health route for quick browser checks
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Gojoye API is running",
+        routes: ["/auth", "/properties", "/inquiries", "/review", "/checkout"],
+    });
+});
 
 //ROUTE NOT FOUND
 app.use((req, res, next) => {
