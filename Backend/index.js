@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors()); // Use the cors middleware with your options
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 const authRoute = require("./routes/auth");

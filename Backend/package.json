@@ -4,6 +4,7 @@
     "description": "This is an api for real estate rental service",
     "main": "index.js",
     "scripts": {
+        "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Fitsum Mehari",
