@@ -3,7 +3,7 @@ services:
     build:
       context: ./Backend
       dockerfile: Dockerfile
-    container_name: gojoye-backend
+    container_name: gojoye-backend2
     env_file:
       - ./Backend/.env
     ports:
@@ -14,7 +14,7 @@ services:
     build:
       context: ./Frontend
       dockerfile: Dockerfile
-    container_name: gojoye-frontend
+    container_name: gojoye-frontend2
     depends_on:
       - backend
     ports:
