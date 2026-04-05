@@ -1,4 +1,19 @@
 services:
+  mongo:
+    image: mongo:7
+    container_name: gojoye-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
   backend:
     build:
       context: ./Backend
@@ -6,6 +21,11 @@ services:
     container_name: gojoye-backend2
     env_file:
       - ./Backend/.env
+    environment:
+      MONGODB_URL: mongodb://mongo:27017/gojoye
+    depends_on:
+      mongo:
+        condition: service_healthy
     ports:
       - "3000:3000"
     restart: unless-stopped
@@ -20,3 +40,6 @@ services:
     ports:
       - "5173:80"
     restart: unless-stopped
+
+volumes:
+  mongo-data:
